@@ -2,8 +2,6 @@
 #include "Map.h"
 #include "Joueur.h"
 #include "Combat.h"
-//#include <fstream> normalement inutile, à tester
-#include <iostream>
 #include <string>
 #include <cstdlib>
 #include <cstdio>
@@ -41,11 +39,11 @@ void Jeux::m_getJoueur(){
 	string s_choix;
 	int choix=0;
 	while(choix<1 || choix>nb_heros){
-		cout<<"Quelle classe veux-tu pour ton personnage ?";
+		m_afficherLigne("Quelle classe veux-tu pour ton personnage ?");
 		getline(cin, s_choix);
 		choix=atoi(s_choix);
 		if (choix<1 || choix>nb_heros){
-			cout<<"Impossible, merci de choisir un nombre entre 1 et "<<nb_heros<<endl;
+			m_afficherLigne("Impossible, merci de choisir un nombre entre 1 et "+nb_heros);
 		}
 	}
 //Récupération du nom du personnage choisi
@@ -58,21 +56,15 @@ void Jeux::m_getJoueur(){
 		fgets(heros_choisi, 50, stream_heros);
 	}
 	pclose(stream_heros);
-	cout<<"Tu incarneras : "<<heros_choisi<<endl;
+	m_afficherLigne("Tu incarneras : "+heros_choisi);
 //Initialisation du joueur
 	heros=jouer(heros_choisi);
 }
 
 void Jeux::m_selectDifficulty(){
-	int choix=0;
-	while (choix<1 || choix>3){
-		cout<<"Difficulté :"<<endl;
-		cout<<"1 pour Easy, 2 pour Medium, 3 pour Hard"<<endl;
-		cin>>choix;
-		if (choix<1 || choix>3){
-			cout<<"Impossible, merci de choisir un nombre entre 1 et 3"<<endl;
-		}
-	}
+	m_afficherLigne("Difficulté :");
+	m_afficherLigne("1 pour Easy, 2 pour Medium, 3 pour Hard");
+	int choix=m_getIntegeur(1, 3);
 	difficulty=choix;
 }
 
@@ -105,7 +97,7 @@ void Jeux::m_getMap(){
 	carte.m_chargerCarte(nom_map);
 //si la map n'est pas correcte
 	if (m_chargerCarte(nom_map)==false){
-		cout<<"Carte corrompue"<<endl;
+		m_afficherLigne("Carte corrompue");
 		etatJeux=e_FinDuJeu;
 	}
 
@@ -116,12 +108,25 @@ void Jeux::m_update(){
 		m_getJoueur();
 		m_selectDifficulty();
 		m_getMap();
+		carte.m_afficherCarte();
 		etatJeux=e_Exploration;
 	}
 
 	else if(etatJeux==e_Exploration){
-//		get.deplacement();
-//		carte.deplacement();
+		char direction[4];
+		direction[0]=z	//Avancer
+		direction[1]=q	//Gauche
+		direction[2]=s	//Reculer
+		direction[3]=d	//Droite
+		char mouvement=m_getChar(* direction, 4);
+		if (mouvement=='z')
+			carte.m_deplacerHaut();
+		if (mouvement=='q')
+			carte.m_deplacerGauche();
+		if (mouvement=='s')
+			carte.m_deplacerBas();
+		if (mouvement=='d')
+			carte.m_deplacerDroite();
 		carte.m_afficherCarte();
 		if (carte.m_getCombat==true){
 			etatJeux=e_Combat;
@@ -139,19 +144,14 @@ void Jeux::m_update(){
 
 	else if(etatJeux==e_FinDuJeu){
 		if(heros.m_getPV()==0)
-			cout<<"Game Over"<<endl;
+			m_afficherLigne("Game Over");
 		else if(carte.m_resteMonstre()==false)
-			cout<<"Félicitations vous avez gagné"<<endl;
+			m_afficherLigne("Félicitations vous avez gagné");
 		else
-			cout<<"Partie finie"<<endl;
+			m_afficherLigne("Partie finie");
 //rejouer ou non
-		int choix=2;
-		while(choix<0 || choix>1){
-			cout<<"Voulez-vous rejouer ? (0 pour oui, 1 pour non) : ";
-			cin>>choix;
-			if (choix<0 || choix>1)
-				cout<<"Veuillez entrer 0 ou 1"<<endl;
-		}
+		cout<<"Voulez-vous rejouer ? (0 pour oui, 1 pour non) : ";
+		int choix=m_getIntegeur(int 0, int 1);	
 		if (choix==0){
 			etatJeux=e_Initialisation;
 		}
@@ -167,6 +167,5 @@ bool Jeux::m_getEtat(){
 }
 
 Jeux::~Jeux(){
-	cout<<"Appel du destructeur. Il ne sert à rien mais il est là, tout beau."<<endl<<"Bisous"<<endl;
+	delete heros;
 }
-
