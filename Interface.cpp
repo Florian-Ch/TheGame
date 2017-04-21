@@ -13,7 +13,7 @@ Interface::~Interface()
 
 void Interface::m_afficherLigne(string phrase)
 {
-	cout << phrase;
+	cout << phrase << endl;
 }
 
 int Interface::m_getIntegeur(int min, int max)
@@ -45,7 +45,7 @@ char Interface::m_getChar(char* possibilite, int tailleTableau)
 
 void Interface::m_messageErreur(string message)
 {
-	cerr << message;
+	cerr << message << endl;
 }
 
 string Interface::m_getString()
