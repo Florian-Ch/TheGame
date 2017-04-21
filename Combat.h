@@ -5,8 +5,8 @@ class Combat
 
 	private:
 	
-	Joueur* heros;		//A remplacer par Joueur heros;
-	Monstre monstre;	//A remplacer par Monstre monstre;
+	Joueur* heros;		
+	Monstre monstre;	
 	bool fin_cbt;
 
 	public:
