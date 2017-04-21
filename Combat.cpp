@@ -15,7 +15,7 @@ Combat::Combat(Joueur* h,Monstre m)
 void Combat::m_ChoixCompHeros()							//Méthode qui permet au joueur de choisir une compétence a utiliser
 {
 	
-	cout<<"C'est a votre tour, quelle compétence voulez vous utiliser ?"; 	
+	m_afficherLigne("C'est a votre tour, quelle compétence voulez vous utiliser ?"); 	
 	
 	int n = Interface::m_getInteger(0, heros->m_GetNbCompetence());								
 	heros->m_UtiliserCompetence(n,&monstre);					
