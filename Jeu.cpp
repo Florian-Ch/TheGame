@@ -100,6 +100,11 @@ ntToString	string s_map=("find ./Map -name map");
 
 void Jeux::m_update(){
 	if(etatJeux==e_Initialisation){
+		m_afficherLigne("________     ________     ___________________________");
+		m_afficherLigne("   |   |_____||______    |  ____|_____||  |  ||______");
+		m_afficherLigne("   |   |     ||______    |_____||     ||  |  ||______");
+		m_afficherLigne("_____________________________________________________");
+		m_afficherLigne("");
 		m_getJoueur();
 		m_selectDifficulty();
 		m_getMap();
