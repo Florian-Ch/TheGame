@@ -12,8 +12,7 @@ Interface::~Interface()
 }
 
 void Interface::m_afficherLigne(string phrase)
-{
-	cout << phrase << endl;
+	cout << phrase;
 }
 
 int Interface::m_getIntegeur(int min, int max)
@@ -45,7 +44,7 @@ char Interface::m_getChar(char* possibilite, int tailleTableau)
 
 void Interface::m_messageErreur(string message)
 {
-	cerr << message << endl;
+	cerr << message;
 }
 
 string Interface::m_getString()
@@ -53,4 +52,11 @@ string Interface::m_getString()
 	string resultat;
 	cin >> resultat;
 	return resultat;
+}
+
+//permet la converion d'un int en string
+string Interface::m_intToString(int i){		
+	ostringstream oss;
+	oss<<i;
+	return oss.str();
 }

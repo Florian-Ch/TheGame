@@ -1,20 +1,15 @@
+
 #include "Jeu.h"
 #include "Map.h"
 #include "Joueur.h"
 #include "Combat.h"
+#include "Interface.h"
 #include <string>
 #include <cstdlib>
 #include <cstdio>
 #include <sstream>
 
 using namespace std;
-
-//permet la converion d'un int en string
-string intToString(int i){
-	ostringstream oss;
-	oss<<i;
-	return oss.str();
-}
 
 Jeux::Jeux(){
 	etatJeux = e_Initialisation;
@@ -71,7 +66,7 @@ void Jeux::m_selectDifficulty(){
 void Jeux::m_getMap(){
 //Récupère le nombre de maps disponibles pour la difficulté choisie
 	system("> ./Map/All_map.txt");
-	string s_map=("find ./Map -name map");
+ntToString	string s_map=("find ./Map -name map");
 	if (difficulty==1) s_map+='E';
 	else if (difficulty==2) s_map+='M';
 	else if (difficulty==3) s_map+='H';
@@ -92,7 +87,7 @@ void Jeux::m_getMap(){
 	if (difficulty==1) d='E';
 	else if (difficulty==2) d='M';
 	else if (difficulty==3) d='H';
-	string s_num_map=intToString(num_map);
+	string s_num_map=m_intToString(num_map);
 	string nom_map="map"+d+s_num_map;
 	carte.m_chargerCarte(nom_map);
 //si la map n'est pas correcte
