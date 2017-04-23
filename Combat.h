@@ -22,10 +22,9 @@ class Combat
 
 	private:
 	
-	Joueur* heros;		/**\private heros
-				*/
-	Monstre monstre;	 	
-	bool fin_cbt;		 	
+	Joueur* heros;		/*!< Héros du joueur*/
+	Monstre monstre;	/*!< Monstre à combattre*/ 	
+	bool fin_cbt;		/*!< Etat du combat*/ 	
 
 	public:
 	
