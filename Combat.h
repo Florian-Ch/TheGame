@@ -1,22 +1,64 @@
-#include "Personnage.cpp"
+/**
+  \file Combat.cpp
+  \brief Classe Combat
+  \author Thomas
+  \details Attributs et Méthodes de la classe Combat
+ 
+ 
+ 
+ */
+
+
+/*!	\class Combat
+ 	\brief classe Combat	
+
+	Fonctionement du Combat
+*/
+
+#include "Personnage.h"
 
 class Combat
 {
 
 	private:
 	
-	Joueur* heros;		
-	Monstre monstre;	
-	bool fin_cbt;
+	Joueur* heros;		/**\private heros
+				*/
+	Monstre monstre;	 	
+	bool fin_cbt;		 	
 
 	public:
-
+	
+	/*!
+	\fn public Combat(Joueur*,Monstre)
+	\brief Fonction qui construit le combat
+	*/
 	Combat(Joueur*,Monstre);
+	
+	/*!
+	\fn public m_CombatLancement()
+	\brief Fonction qui gere le deroulement du combat
+	*/
 	void m_CombatLancement();
+	
+	/*!
+	\fn public m_Affichage()
+	\brief Fonction qui gere l'affichage du combat
+	*/	
 	void m_Affichage();
+	
+	/*!
+	\fn public m_ChoixCompHeros()
+	\brief Fonction qui gere le choix de comp du heros
+	*/
 	void m_ChoixCompHeros();
+	
+	/*!
+	\fn public m_ChoixCompMonstre()
+	\brief Fonction qui gere le choix de comp du monstre
+	*/
 	void m_ChoixCompMonstre();
 	
+	
 };
-
 
