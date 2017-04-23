@@ -12,7 +12,11 @@ Interface::~Interface()
 }
 
 void Interface::m_afficherLigne(string phrase)
-	cout << phrase;
+	cout << phrase << endl;
+}
+
+void Interface::m_afficherChar(char lettre)
+	cout << lettre;
 }
 
 int Interface::m_getIntegeur(int min, int max)
