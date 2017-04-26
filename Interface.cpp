@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Interface.h"
 
 using namespace std;
@@ -12,11 +13,8 @@ Interface::~Interface()
 }
 
 void Interface::m_afficherLigne(string phrase)
-	cout << phrase << endl;
-}
-
-void Interface::m_afficherChar(char lettre)
-	cout << lettre;
+{
+	cout << phrase;
 }
 
 int Interface::m_getIntegeur(int min, int max)
@@ -58,9 +56,14 @@ string Interface::m_getString()
 	return resultat;
 }
 
-//permet la converion d'un int en string
-string Interface::m_intToString(int i){		
-	ostringstream oss;
-	oss<<i;
-	return oss.str();
+int Interface::m_stringTOint(string leChiffre)
+{
+	return atoi(leChiffre.c_str());
+}
+
+string Interface::m_intTOstring(int leChiffre)
+{
+	stringstream ss;
+	ss << leChiffre;
+	return ss.str();
 }

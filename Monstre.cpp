@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Monstre.h"
 
 using namespace std;
@@ -16,7 +17,7 @@ void Monstre::m_UtiliserCompetence(int numeroCompetence, Personnage* cible)
 	if (manaActuelle > competences[numeroCompetence].m_getCoutMana())
 	{
 		manaActuelle -= competences[numeroCompetence].m_getCoutMana();
-		competences[numeroCompetence].m_Utiliser(this, cible);
+		m_Utiliser(&competences[numeroCompetence], cible);
 	}
 	else
 	{
@@ -25,7 +26,7 @@ void Monstre::m_UtiliserCompetence(int numeroCompetence, Personnage* cible)
 			if (manaActuelle > competences[numeroCompetence].m_getCoutMana())
 			{
 				manaActuelle -= competences[numeroCompetence].m_getCoutMana();
-				competences[numeroCompetence].m_Utiliser(this, cible);
+				m_Utiliser(&competences[numeroCompetence], cible);
 				break;
 			}
 		}

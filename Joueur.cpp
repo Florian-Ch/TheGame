@@ -1,8 +1,9 @@
+#include "stdafx.h"
 #include "Joueur.h"
 
 using namespace std;
 
-Joueur::Joueur(string nomHeros) : Personnage("HÃ©ros/"+ nomHeros+".txt")
+Joueur::Joueur(string nomHeros) : Personnage("Héros/"+ nomHeros+".txt")
 {
 
 }

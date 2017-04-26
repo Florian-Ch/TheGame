@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Personnage.h"
 
 
@@ -37,6 +38,14 @@ Personnage::~Personnage()
 void Personnage::m_UtiliserCompetence(int, Personnage*)
 {
 
+}
+
+void Personnage::m_Utiliser(Competence* sort, Personnage* cible)
+{
+	cible->m_PrendreDegat(sort->m_getDegat());
+	cible->m_PerdreMana(sort->m_getManaRetirer());
+	this->m_PrendreDegat(-sort->m_getSoinLanceur());
+	this->m_PerdreMana(-sort->m_getManaRenduLanceur());
 }
 
 // Methode : \\.

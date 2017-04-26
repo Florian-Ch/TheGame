@@ -18,6 +18,7 @@ protected:
 	int pvMax;
 	int pvActuelle;
 	std::vector<Competence> competences;
+	void m_Utiliser(Competence*, Personnage*);
 
 public:
 	Personnage(std::string);
