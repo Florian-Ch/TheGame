@@ -1,6 +1,13 @@
-#include "Map.h"
-
-int main()
+Map::Generate_map(int n)
 {
-
+  tailleCarteX=n;
+  tailleCarteY=n;
+  
+  for(int i=0;i<n;i++)
+  {
+    for(int j=0;j<n;j++)
+    {
+      carte[i][j]=" ";
+    }
+  }
 }
