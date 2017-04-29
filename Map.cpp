@@ -42,13 +42,15 @@ void Map::m_deplacerDroite(){
 
 void Map::m_afficherCarte(){
 	if(tailleCarteX<15 && tailleCarteY<15){
+cout<<"ici1"<<endl;
 		for (int i=0; i<tailleCarteX; i++){
 			for (int j=0; j<tailleCarteY; j++)
 				Interface::m_afficherChar(carte[i][j]);
-			Interface::m_afficherLigne("");
+//			Interface::m_afficherLigne("");
 		}
 	}
 	else if (posX-5<0){
+cout<<"ici2"<<endl;
 		for (int i=0; i<posX+6; i++){
 			for (int j=posY-5; j<posY+6; j++)
 				Interface::m_afficherChar(carte[i][j]);
@@ -56,6 +58,7 @@ void Map::m_afficherCarte(){
 		}
 	}
 	else if (posY-5<0){
+cout<<"ici3"<<endl;
 		for (int i=posX-5; i<posX+6; i++){
 			for (int j=0; j<posY+6; j++)
 				Interface::Interface::m_afficherChar(carte[i][j]);
@@ -63,6 +66,7 @@ void Map::m_afficherCarte(){
 		}
 	}
 	else if (posX+6>=tailleCarteX){
+cout<<"ici4"<<endl;
 		for (int i=posX-5; i<tailleCarteX; i++){
 			for (int j=posY-5; j<posY+6; j++)
 				Interface::m_afficherChar(carte[i][j]);
@@ -70,6 +74,7 @@ void Map::m_afficherCarte(){
 		}
 	}
 	else if (posY+6>=tailleCarteY){
+cout<<"ici5"<<endl;
 		for (int i=posX-5; i<posX+6; i++){
 			for (int j=posY-5; j<tailleCarteY; j++)
 				Interface::m_afficherChar(carte[i][j]);
@@ -77,6 +82,7 @@ void Map::m_afficherCarte(){
 		}
 	}
 	else {
+cout<<"ici6"<<endl;
 		for (int i=posX-5; i<posX+6; i++){
 			for (int j=posY-5; j<posY+6; j++)
 				Interface::m_afficherChar(carte[i][j]);
@@ -86,8 +92,10 @@ void Map::m_afficherCarte(){
 }
 
 bool Map::m_chargerCarte(string nomMap){
-	string pathMap="/Map/"+nomMap;
-	ifstream mapTxt(pathMap.c_str(), ios::in);
+	string pathMap="Map/"+nomMap;
+cout<<pathMap<<endl;
+	ifstream mapTxt;
+	mapTxt.open(pathMap.c_str());
 //récupération de la taille de la map
 	if(mapTxt){
 		int maxSizeLine=0;
@@ -100,6 +108,8 @@ bool Map::m_chargerCarte(string nomMap){
 		tailleCarteX = maxSizeLine;		
 		mapTxt.close();
 	}
+	else
+		Interface::m_afficherLigne("Map non ouverte");
 //création de la carte et initialisation de toutes les cases à ' '
 	carte = new char*[tailleCarteX];
 	for (int i=0; i<tailleCarteX; i++){
@@ -108,22 +118,29 @@ bool Map::m_chargerCarte(string nomMap){
 			carte[i][j]=' ';
 	}
 //mapTxt → Tableau
+	mapTxt.open(pathMap.c_str());
 	if(mapTxt){
 		char lettre;
 		int i=0, j=0;
+cout<<"Map :"<<endl;
 		while(mapTxt.get(lettre)){
 			carte[i][j]=lettre;
+			cout<<carte[i][j];
 			if (j==tailleCarteY-1){
 				i++;
 				j=0;
+			cout<<endl;
 			}
 			else
 				j++;
 		}
+cout<<"fin map"<<endl;
+cout<<"fdskjljfls :"<<carte[tailleCarteX-1][tailleCarteY-1]<<endl;
 		mapTxt.close();
 	}
 //Détection point de spawn
 	int nbSpawn=0;
+	cout<<"taille : "<<tailleCarteX<<" "<<tailleCarteY<<endl;
 	for (int i=0; i<tailleCarteX; i++){
 		for (int j=0; j<tailleCarteY; j++){
 			if (carte[i][j]=='1')
@@ -131,6 +148,7 @@ bool Map::m_chargerCarte(string nomMap){
 		}
 	}
 	if (nbSpawn==1){
+		Interface::m_afficherLigne("Chargement de la carte");
 		for (int i=0; i<tailleCarteX; i++){
 			for (int j=0; j<tailleCarteY; j++){
 				if (carte[i][j]=='1')

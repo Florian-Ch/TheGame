@@ -80,15 +80,17 @@ void Jeux::m_getMap(){
 	int nb_map=atoi(s_nb_map);
 	system("rm ./Map/All_map.txt");
 //Sélectionne une map au hasard dans la difficulté
-	int num_map=rand()%(nb_map)+1;
+	int num_map=rand()%(nb_map);
+cout<<"nb map: "<<nb_map<<endl;
+cout<<"num map: "<<num_map<<endl;
 //Donne le nom de la map randomisée avec laquelle le joueur va jouer
 	string d;
 	if (difficulty==1) d='E';
 	else if (difficulty==2) d='M';
 	else if (difficulty==3) d='H';
 	string s_num_map=Interface::m_intTOstring(num_map);
-	string nom_map="map"+d+s_num_map;
-	carte.m_chargerCarte(nom_map);
+	string nom_map="map"+d+s_num_map+".txt";
+//	carte.m_chargerCarte(nom_map);
 //si la map n'est pas correcte
 	if (carte.m_chargerCarte(nom_map)==false){
 		Interface::m_afficherLigne("Carte corrompue");
