@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Personnage.h"
 
 
@@ -8,20 +7,22 @@ using namespace std;
 
 Personnage::Personnage(string emplacementFichier)
 {
-	ifstream fichier(emplacementFichier);
+	ifstream fichier(emplacementFichier.c_str());
 
 	if (fichier)
 	{
 		string res;
 		getline(fichier, nom);
 		getline(fichier, res);
-		pvMax = atoi(res.c_str());
+		pvMax = Interface::m_stringTOint(res.c_str());
 		getline(fichier, res);
-		manaMax = atoi(res.c_str());
+		manaMax = Interface::m_stringTOint(res.c_str());
 		getline(fichier, res);
-		vitesse = atoi(res.c_str());
+		vitesse = Interface::m_stringTOint(res.c_str());
 		while (getline(fichier, res));
-		competences.push_back(Competence(res));
+			if(res != "")
+				competences.push_back(Competence(res));			
+
 		fichier.close();
 		manaActuelle = manaMax;
 		pvActuelle = pvMax;

@@ -1,3 +1,7 @@
+#pragma once
+#include <fstream>
+#include <string>
+#include "Interface.h"
 /*!
 \file Jeu.h
 \brief Header de la classe Map
@@ -28,19 +32,19 @@ Initialise la taille de la carte à (0;0)
 /*!
 \brief Déplacement du joueur vers le haut
 */
-	void m_déplacerHaut();
+	void m_deplacerHaut();
 /*!
 \brief Déplacement du joueur vers le bas
 */
-	void m_déplacerBas();
+	void m_deplacerBas();
 /*!
 \brief Déplacement du joueur vers la gauche
 */
-	void m_déplacerGauche();
+	void m_deplacerGauche();
 /*!
 \brief Déplacement du joueur vers la droite
 */
-	void m_déplacerDroite();
+	void m_deplacerDroite();
 /*!
 \brief Affiche la carte
 Affiche 5 cases de chaque coté du joueur si la taille de la carte et le positionnement du joueur le permettent
@@ -52,13 +56,15 @@ Affiche 5 cases de chaque coté du joueur si la taille de la carte et le positio
 \return true si la map est possible
 \return false si la map est techniquement impossible (ex: il n'y a pas de spawn pour le joueur)
 */
-	bool m_chargerCarte(string);
+	bool m_chargerCarte(std::string);
 /*!
 \brief Booléen pour savoir s'il reste des monstres sur la carte
 \return true s'il reste des monstres
 \return false si tous les monstres ont été vaincus
 */
 	bool m_resteMonstre();
+	char m_getCombat();
+
 /*!
 \brief Destructeur
 */

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Competence.h"
 
 using namespace std;
@@ -17,7 +16,7 @@ Mana rendu au lanceur
 Competence::Competence(string nom)
 {
 	string nomFichier = "Competence/" + nom + ".txt";
-	ifstream fichier(nomFichier);
+	ifstream fichier(nomFichier.c_str());
 
 	if (fichier)
 	{

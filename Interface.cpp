@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Interface.h"
 
 using namespace std;
@@ -14,21 +13,28 @@ Interface::~Interface()
 
 void Interface::m_afficherLigne(string phrase)
 {
-	cout << phrase;
+	cout << phrase<<endl;
+}
+
+void Interface::m_afficherChar(char lettre)
+{
+	cout << lettre;
 }
 
 int Interface::m_getIntegeur(int min, int max)
 {
-	int resultat;
+	string resultat;
+	int res;
 	bool boucle = true;
 	do
 	{
 		cin >> resultat;
-		if (resultat > min && resultat < max)
+		res = Interface::m_stringTOint(resultat);
+		if (res >= min && res <= max)
 			boucle = false;
 	} while (boucle);
 
-	return resultat;
+	return res;
 }
 
 char Interface::m_getChar(char* possibilite, int tailleTableau)
@@ -58,7 +64,10 @@ string Interface::m_getString()
 
 int Interface::m_stringTOint(string leChiffre)
 {
-	return atoi(leChiffre.c_str());
+	istringstream buffer(leChiffre);
+	int valeur;
+	buffer >> valeur;
+	return valeur;
 }
 
 string Interface::m_intTOstring(int leChiffre)

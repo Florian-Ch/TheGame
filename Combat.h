@@ -14,8 +14,14 @@
 
 	Fonctionement du Combat
 */
-
+#pragma once
+#include "Monstre.h"
+#include "Joueur.h"
 #include "Personnage.h"
+#include <cstdlib>
+#include <string>
+#include "Interface.h"
+
 
 class Combat
 {
@@ -32,7 +38,7 @@ class Combat
 	\fn public Combat(Joueur*,Monstre)
 	\brief Fonction qui construit le combat
 	*/
-	Combat(Joueur*,Monstre);
+	Combat(Joueur*,std::string);
 	
 	/*!
 	\fn public m_CombatLancement()

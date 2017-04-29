@@ -1,9 +1,8 @@
-#include "stdafx.h"
 #include "Joueur.h"
 
 using namespace std;
 
-Joueur::Joueur(string nomHeros) : Personnage("Héros/"+ nomHeros+".txt")
+Joueur::Joueur(string nomHeros) : Personnage(nomHeros)
 {
 
 }
@@ -19,10 +18,10 @@ void Joueur::m_UtiliserCompetence(int numeroCompetence, Personnage* cible)
 	if (manaActuelle > competences[numeroCompetence].m_getCoutMana())
 	{
 		manaActuelle -= competences[numeroCompetence].m_getCoutMana();
-		competences[numeroCompetence].m_Utiliser(this, cible);
+		m_Utiliser(&competences[numeroCompetence], cible);
 	}
 	else
-		competences[0].m_Utiliser(this, cible);
+		m_Utiliser(&competences[0], cible);
 	
 }
 

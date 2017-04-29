@@ -1,6 +1,5 @@
 #include "Map.h"
-#include <fstream>
-#include <string>
+
 
 using namespace std;
 
@@ -9,82 +8,86 @@ Map::Map(){
 	tailleCarteY=0;
 }
 
-void Map::m_déplacerHaut(){
+Map::~Map(){
+
+}
+
+void Map::m_deplacerHaut(){
 	if (carte[posX][posY-1]!=0 && posY!=0)
 		posY=posY-1;
 	else
-		m_messageErreur("BOUM ! Un mur !");
+		Interface::m_messageErreur("BOUM ! Un mur !");
 }
 
-void Map::m_déplacerBas(){
+void Map::m_deplacerBas(){
 	if (carte[posX][posY+1]!=0 && posY!=tailleCarteY-1)
 		posY=posY+1;
 	else
-		m_messageErreur("BOUM ! Un mur !");
+		Interface::m_messageErreur("BOUM ! Un mur !");
 }
 
-void Map::m_déplacerGauche(){
+void Map::m_deplacerGauche(){
 	if (carte[posX-1][posY]!=0 && posX!=0)
 		posX=posX-1;
 	else
-		m_messageErreur("BOUM ! Un mur !");
+		Interface::m_messageErreur("BOUM ! Un mur !");
 }
 
-void Map::m_déplacerDroite(){
+void Map::m_deplacerDroite(){
 	if (carte[posX+1][posY]!=0 && posX!=tailleCarteX-1)
 		posX=posX+1;
 	else
-		m_messageErreur("BOUM ! Un mur !");
+		Interface::m_messageErreur("BOUM ! Un mur !");
 }
 
 void Map::m_afficherCarte(){
 	if(tailleCarteX<15 && tailleCarteY<15){
 		for (int i=0; i<tailleCarteX; i++){
 			for (int j=0; j<tailleCarteY; j++)
-				m_afficherChar(carte[i][j]);
-			m_afficherLigne("");
+				Interface::m_afficherChar(carte[i][j]);
+			Interface::m_afficherLigne("");
 		}
 	}
 	else if (posX-5<0){
 		for (int i=0; i<posX+6; i++){
 			for (int j=posY-5; j<posY+6; j++)
-				m_afficherChar(carte[i][j]);
-			m_afficherLigne("");
+				Interface::m_afficherChar(carte[i][j]);
+			Interface::m_afficherLigne("");
 		}
 	}
 	else if (posY-5<0){
 		for (int i=posX-5; i<posX+6; i++){
 			for (int j=0; j<posY+6; j++)
-				m_afficherChar(carte[i][j]);
-			m_afficherLigne("");
+				Interface::Interface::m_afficherChar(carte[i][j]);
+			Interface::Interface::m_afficherLigne("");
 		}
 	}
 	else if (posX+6>=tailleCarteX){
 		for (int i=posX-5; i<tailleCarteX; i++){
 			for (int j=posY-5; j<posY+6; j++)
-				m_afficherChar(carte[i][j]);
-			m_afficherLigne("");
+				Interface::m_afficherChar(carte[i][j]);
+			Interface::m_afficherLigne("");
 		}
 	}
 	else if (posY+6>=tailleCarteY){
 		for (int i=posX-5; i<posX+6; i++){
 			for (int j=posY-5; j<tailleCarteY; j++)
-				m_afficherChar(carte[i][j]);
-			m_afficherLigne("");
+				Interface::m_afficherChar(carte[i][j]);
+			Interface::m_afficherLigne("");
 		}
 	}
 	else {
 		for (int i=posX-5; i<posX+6; i++){
 			for (int j=posY-5; j<posY+6; j++)
-				m_afficherChar(carte[i][j]);
-			m_afficherLigne("");
+				Interface::m_afficherChar(carte[i][j]);
+			Interface::m_afficherLigne("");
 		}		
 	}
 }
 
 bool Map::m_chargerCarte(string nomMap){
 	string pathMap="/Map/"+nomMap;
-	ifstream mapTxt(pathMap, ios::in);
+	ifstream mapTxt(pathMap.c_str(), ios::in);
 //récupération de la taille de la map
 	if(mapTxt){
 		int maxSizeLine=0;
@@ -138,7 +141,7 @@ bool Map::m_chargerCarte(string nomMap){
 		return true;
 	}
 	else{
-		m_messageErreur("Map impossible, nombre de points de spawn != 1, désolé !");
+		Interface::m_messageErreur("Map impossible, nombre de points de spawn != 1, désolé !");
 		return false;
 	}
 }
@@ -155,4 +158,11 @@ bool Map::m_resteMonstre(){
 		return false;
 	else
 		return true;
+}
+
+char Map::m_getCombat(){
+	if(!(carte[posX][posY] >= '0' && carte[posX][posY] <= '4'))
+		return carte[posX][posY];
+	else
+		return '0';
 }

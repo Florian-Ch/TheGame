@@ -1,3 +1,4 @@
+#pragma once
 /*!
 \file Jeu.h
 \brief Header de la classe Jeu
@@ -5,6 +6,16 @@
 \date 22 avril 2017
 \version 1
 */
+
+#include "Map.h"
+#include "Joueur.h"
+#include "Combat.h"
+#include "Interface.h"
+#include <string>
+#include <cstdlib>
+#include <cstdio>
+#include <iostream>
+#include <sstream>
 
 
 /*! \class Jeux Jeu.h
