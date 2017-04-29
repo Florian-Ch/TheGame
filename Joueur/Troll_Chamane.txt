@@ -1,0 +1,5 @@
+Troll Chamane
+100
+40
+20
+Coup_de_baton
