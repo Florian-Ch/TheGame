@@ -25,14 +25,12 @@ void Joueur::m_UtiliserCompetence(int numeroCompetence, Personnage* cible)
 	
 }
 
-vector<string>* Joueur::m_GetAllCompetence()
+void Joueur::m_GetAllCompetence()
 {
-	vector<string>* resultat;
 	for (int i = 0; i < competences.size(); i++){
-cout<<competences[i].m_GetDescriptif()<<endl;
-//		resultat->push_back(competences[i].m_GetDescriptif());
+		Interface::m_afficherLigne("[" + Interface::m_intTOstring(i+1) + "]" +competences[i].m_GetDescriptif());
 	}
-	return resultat;
+	
 }
 
 void Joueur::m_RestaurerSante()

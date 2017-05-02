@@ -13,10 +13,12 @@ Monstre::~Monstre()
 
 void Monstre::m_UtiliserCompetence(int numeroCompetence, Personnage* cible)
 {
-	if (manaActuelle > competences[numeroCompetence].m_getCoutMana())
+	if (manaActuelle >= competences[numeroCompetence].m_getCoutMana())
 	{
 		manaActuelle -= competences[numeroCompetence].m_getCoutMana();
+		cout<<"Le monstre utilise:"<<competences[numeroCompetence].m_GetNom()<<endl;
 		m_Utiliser(&competences[numeroCompetence], cible);
+				
 	}
 	else
 	{

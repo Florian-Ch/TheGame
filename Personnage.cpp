@@ -19,9 +19,15 @@ Personnage::Personnage(string emplacementFichier)
 		manaMax = Interface::m_stringTOint(res.c_str());
 		getline(fichier, res);
 		vitesse = Interface::m_stringTOint(res.c_str());
+		
 		while (getline(fichier, res)){
-			if(res != "")
-				competences.push_back(Competence(res));			
+		string nomCompetence ="";
+		for (int i=0; i<res.size();i++){
+			if((int)res[i] > 30)
+				nomCompetence +=res[i];
+		}
+			if(nomCompetence != "")
+				competences.push_back(Competence(nomCompetence));			
 		}
 		fichier.close();
 		manaActuelle = manaMax;

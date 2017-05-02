@@ -28,10 +28,17 @@ int Interface::m_getIntegeur(int min, int max)
 	bool boucle = true;
 	do
 	{
+		bool verifChiffre = true;
 		cin >> resultat;
-		res = Interface::m_stringTOint(resultat);
-		if (res >= min && res <= max)
-			boucle = false;
+		for(int i=0; i<resultat.size(); i++)
+			if((int)resultat[i] < 47 || (int)resultat[i] > 58)
+				verifChiffre = false;
+		if(verifChiffre)
+		{
+			res = Interface::m_stringTOint(resultat);
+			if (res >= min && res <= max)
+				boucle = false;
+		}
 	} while (boucle);
 
 	return res;
@@ -39,14 +46,14 @@ int Interface::m_getIntegeur(int min, int max)
 
 char Interface::m_getChar(char* possibilite, int tailleTableau)
 {
-	char resultat;
+	string resultat;
 	bool boucle = true;
 	do
 	{
 		cin >> resultat;
 		for (int i = 0; i < tailleTableau; i++)
-			if (resultat == possibilite[i])
-				return resultat;
+			if (resultat[0] == possibilite[i])
+				return resultat[0];
 	} while (boucle);
 }
 

@@ -12,9 +12,9 @@ void Combat::m_ChoixCompHeros()							//Méthode qui permet au joueur de choisir
 {
 	
 	Interface::m_afficherLigne("C'est a votre tour, quelle compétence voulez vous utiliser ?");
-cout<<"nb comp : "<<heros->m_GetNbrCompetence()<<endl;
-	int n=Interface::m_getIntegeur(0, heros->m_GetNbrCompetence());								
-	heros->m_UtiliserCompetence(n,&monstre);					
+	int n=Interface::m_getIntegeur(0, heros->m_GetNbrCompetence());
+	if(n!=0) 								
+		heros->m_UtiliserCompetence(n-1,&monstre);					
 }
 
 void Combat::m_ChoixCompMonstre()						//Méthode qui définit l'IA du monstre à améliorer
@@ -23,30 +23,32 @@ void Combat::m_ChoixCompMonstre()						//Méthode qui définit l'IA du monstre �
 	int nbc=monstre.m_GetNbrCompetence();					//Recup le nbr de comp du monstre
 	int m=rand()%nbc;							//Genre un nombre aléatoire pour savoir qu'elle comp utiliser
 	monstre.m_UtiliserCompetence(m,heros);
-	Interface::m_afficherLigne("Le monstre vient de jouer");				
 }
 
 void Combat::m_Affichage()
 {
 	system("clear");
-	Interface::m_afficherLigne(heros->m_GetNom());
+	Interface::m_afficherLigne(heros->m_GetNom()+":");
 	Interface::m_afficherLigne("Pv : "+Interface::m_intTOstring(heros->m_GetPV()));
 	Interface::m_afficherLigne("Mana : "+Interface::m_intTOstring(heros->m_GetMana()));
-	vector<string>* allComp= heros->m_GetAllCompetence();
-//	for(int i=0; i< heros->m_GetNbrCompetence();i++)
-//		Interface::m_afficherLigne(allComp->at(i));
+	Interface::m_afficherLigne("[0]Passer le tour");
+	heros->m_GetAllCompetence();
 	Interface::m_afficherLigne(monstre.m_GetNom());
 	Interface::m_afficherLigne("Pv : "+Interface::m_intTOstring(monstre.m_GetPV()));
 	Interface::m_afficherLigne("Mana : "+Interface::m_intTOstring(monstre.m_GetMana()));
 }
 
+
+
 void Combat::m_CombatLancement()
 {
 
-	m_Affichage();
+	
 
 	while(fin_cbt==false)
 	{
+		
+		m_Affichage();
 		if(heros->m_GetVitesse()>monstre.m_GetVitesse())
 		{
 			m_ChoixCompHeros();

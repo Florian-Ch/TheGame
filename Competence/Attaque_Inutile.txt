@@ -1,6 +1,6 @@
-Attaque Inutile
+Attaque_Inutile
 0
-0
+7
 0
 0
 0

@@ -13,20 +13,27 @@ Mana rendu au lanceur
 
 */
 
-Competence::Competence(string nom)
+
+
+Competence::Competence(string name)
 {
-	string nomFichier = "Competence/" + nom + ".txt";
+	string nomFichier = "./Competence/" + name + ".txt";
 	string nf = "";
 	for(int i=0; i<50; i++)
 		if((int)nomFichier[i] > 30)
 			nf+= nomFichier[i];
-	ifstream fichier(nf.c_str());
+	ifstream fichier;
+	fichier.open(nf.c_str());
 
 	if (fichier)
 	{
+		nom ="";
 		string res;
-		getline(fichier, res);
-		this->nom = res;
+		getline(fichier,res);
+		for (int i=0; i<res.size();i++){
+			if((int)res[i] > 30)
+				nom +=res[i];
+		}
 		getline(fichier, res);
 		coutMana = Interface::m_stringTOint(res);
 		getline(fichier, res);
@@ -37,14 +44,20 @@ Competence::Competence(string nom)
 		soinLanceur = Interface::m_stringTOint(res);
 		getline(fichier, res);
 		ManaRenduLanceur = Interface::m_stringTOint(res);
+		fichier.close();
 	}
 	else
-		Interface::m_messageErreur(nomFichier + " : Fichier non trouvé");
+			Interface::m_afficherLigne(nomFichier + " : Fichier de competence non trouver");
 }
 
 Competence::~Competence()
 {
 
+}
+
+string Competence::m_GetNom()
+{
+	return nom;
 }
 
 int Competence::m_getCoutMana()
@@ -64,7 +77,7 @@ string Competence::m_GetDescriptif()
 	if (ManaRetirerCible != 0)
 		res += "Retire [" + Interface::m_intTOstring(ManaRetirerCible) + "] mana a la cible ";
 	if (soinLanceur != 0)
-		res += "Vous soigne de " + Interface::m_intTOstring(soinLanceur) + "] ";
+		res += "Vous soigne de [" + Interface::m_intTOstring(soinLanceur) + "] ";
 	return res;
 }
 

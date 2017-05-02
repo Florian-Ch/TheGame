@@ -29,7 +29,7 @@ void Jeux::m_getJoueur(){
 		getline(cin, s_choix);
 		choix= Interface::m_stringTOint(s_choix);
 		if (choix<1 || choix>nb_heros){
-			Interface::m_afficherLigne("Impossible, merci de choisir un nombre entre 1 et "+nb_heros);
+			Interface::m_afficherLigne("Impossible, merci de choisir un nombre entre 1 et "+Interface::m_intTOstring(nb_heros));
 		}
 	}
 //Récupération du nom du personnage choisi
@@ -48,7 +48,7 @@ void Jeux::m_getJoueur(){
 			nomaff += heros_choisi[i];
 		else
 			break;
-	string nomFichierJoueur ="Joueur/"+nomaff+".txt";
+	string nomFichierJoueur ="./Joueur/"+nomaff+".txt";
 	for (int i=0; i<nomaff.size(); i++){
 		if (nomaff[i]=='_')
 			nomaff[i]=' ';
@@ -120,6 +120,7 @@ void Jeux::m_update(){
 	}
 
 	else if(etatJeux==e_Exploration){
+		system("clear");
 		carte.m_afficherCarte();
 		char direction[4];
 		direction[0]='z';	//Avancer
@@ -135,9 +136,8 @@ void Jeux::m_update(){
 			carte.m_deplacerBas();
 		if (mouvement=='d')
 			carte.m_deplacerDroite();
-		if (carte.m_getCombat()!='0'){
+		if (carte.m_getCombat()!='0')
 			etatJeux=e_Combat;
-		}
 	}
 
 	else if(etatJeux==e_Combat){
@@ -160,10 +160,12 @@ void Jeux::m_update(){
 			Interface::m_afficherLigne("Partie finie");
 //rejouer ou non
 		carte.m_reset();
+		carte = Map();
 		Interface::m_afficherLigne("Voulez-vous rejouer ? (0 pour oui, 1 pour non) : ");
 		int choix=Interface::m_getIntegeur(0,1);	
 		if (choix==0){
-			etatJeux=e_Initialisation;
+			system("./JDR");
+			end=true;
 		}
 		if (choix==1){
 			end=true;

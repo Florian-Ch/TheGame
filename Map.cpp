@@ -10,7 +10,7 @@ Map::Map(){
 }
 
 Map::~Map(){
-
+	
 }
 
 void Map::m_deplacerHaut(){
@@ -71,36 +71,56 @@ void Map::m_afficherCarte(){
 	}
 	else if (posX-5<0){
 		for (int i=0; i<posX+6; i++){
-			for (int j=posY-5; j<posY+6; j++)
-				Interface::m_afficherChar(carte[i][j]);
+			for (int j=posY-5; j<posY+6; j++){
+				if (!(carte[i][j] >= '0' && carte[i][j] <= '4') && carte[i][j]!='+')
+					Interface::m_afficherChar('4');
+				else
+					Interface::m_afficherChar(carte[i][j]);
+			}
 			Interface::m_afficherLigne("");
 		}
 	}
 	else if (posY-5<0){
 		for (int i=posX-5; i<posX+6; i++){
-			for (int j=0; j<posY+6; j++)
-				Interface::Interface::m_afficherChar(carte[i][j]);
+			for (int j=0; j<posY+6; j++){
+				if (!(carte[i][j] >= '0' && carte[i][j] <= '4') && carte[i][j]!='+')
+					Interface::m_afficherChar('4');
+				else
+					Interface::m_afficherChar(carte[i][j]);
+			}
 			Interface::Interface::m_afficherLigne("");
 		}
 	}
 	else if (posX+6>=tailleCarteX){
 		for (int i=posX-5; i<tailleCarteX; i++){
-			for (int j=posY-5; j<posY+6; j++)
-				Interface::m_afficherChar(carte[i][j]);
+			for (int j=posY-5; j<posY+6; j++){
+				if (!(carte[i][j] >= '0' && carte[i][j] <= '4') && carte[i][j]!='+')
+					Interface::m_afficherChar('4');
+				else
+					Interface::m_afficherChar(carte[i][j]);
+			}
 			Interface::m_afficherLigne("");
 		}
 	}
 	else if (posY+6>=tailleCarteY){
 		for (int i=posX-5; i<posX+6; i++){
-			for (int j=posY-5; j<tailleCarteY; j++)
-				Interface::m_afficherChar(carte[i][j]);
+			for (int j=posY-5; j<tailleCarteY; j++){
+				if (!(carte[i][j] >= '0' && carte[i][j] <= '4') && carte[i][j]!='+')
+					Interface::m_afficherChar('4');
+				else
+					Interface::m_afficherChar(carte[i][j]);
+			}
 			Interface::m_afficherLigne("");
 		}
 	}
 	else {
 		for (int i=posX-5; i<posX+6; i++){
-			for (int j=posY-5; j<posY+6; j++)
-				Interface::m_afficherChar(carte[i][j]);
+			for (int j=posY-5; j<posY+6; j++){
+				if (!(carte[i][j] >= '0' && carte[i][j] <= '4') && carte[i][j]!='+')
+					Interface::m_afficherChar('4');
+				else
+					Interface::m_afficherChar(carte[i][j]);
+			}
 			Interface::m_afficherLigne("");
 		}		
 	}

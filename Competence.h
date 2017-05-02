@@ -22,6 +22,7 @@ private:
 public:
 	Competence(std::string);
 	~Competence();
+	std::string m_GetNom();
 	int m_getCoutMana();
 	int m_getDegat();
 	int m_getManaRetirer();
