@@ -112,6 +112,12 @@ int Personnage::m_GetVitesse()
 
 string Personnage::m_GetNom()
 {
+	string tmp="";
+	for (int i=0; i<nom.size();i++){
+		if((int)nom[i] > 30)
+			tmp +=nom[i];
+	}
+	nom=tmp;
 	return nom;
 }
 

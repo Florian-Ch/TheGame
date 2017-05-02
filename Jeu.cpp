@@ -103,6 +103,7 @@ void Jeux::m_getMap(){
 
 void Jeux::m_update(){
 	if(etatJeux==e_Initialisation){
+		system("./delete~.sh");
 		system("clear");
 		system("mpg123 Gladiator.mp3 2> /dev/null &");
 		Interface::m_afficherLigne("________     ________     ___________________________");

@@ -19,7 +19,7 @@ Competence::Competence(string name)
 {
 	string nomFichier = "./Competence/" + name + ".txt";
 	string nf = "";
-	for(int i=0; i<50; i++)
+	for(int i=0; i<nomFichier.size(); i++)
 		if((int)nomFichier[i] > 30)
 			nf+= nomFichier[i];
 	ifstream fichier;
