@@ -2,7 +2,6 @@ Guerrier
 120
 60
 10
-Coup de hache
+Coup_de_hache
 Evisceration
-Fureur du combat
-Attaque Sauvage
+Fureur_du_combat

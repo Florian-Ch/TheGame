@@ -25,12 +25,13 @@ void Joueur::m_UtiliserCompetence(int numeroCompetence, Personnage* cible)
 	
 }
 
-vector<string> Joueur::m_GetAllCompetence()
+vector<string>* Joueur::m_GetAllCompetence()
 {
-	vector<string> resultat;
-	for (int i = 0; i < competences.size(); i++)
-		resultat.push_back(competences[i].m_GetDescriptif());
-
+	vector<string>* resultat;
+	for (int i = 0; i < competences.size(); i++){
+cout<<competences[i].m_GetDescriptif()<<endl;
+//		resultat->push_back(competences[i].m_GetDescriptif());
+	}
 	return resultat;
 }
 

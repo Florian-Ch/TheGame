@@ -1,0 +1,6 @@
+Mannequin d'entrainement
+1000
+0
+0
+Attaque Inutile
+DOOM

@@ -16,7 +16,11 @@ Mana rendu au lanceur
 Competence::Competence(string nom)
 {
 	string nomFichier = "Competence/" + nom + ".txt";
-	ifstream fichier(nomFichier.c_str());
+	string nf = "";
+	for(int i=0; i<50; i++)
+		if((int)nomFichier[i] > 30)
+			nf+= nomFichier[i];
+	ifstream fichier(nf.c_str());
 
 	if (fichier)
 	{
@@ -61,7 +65,6 @@ string Competence::m_GetDescriptif()
 		res += "Retire [" + Interface::m_intTOstring(ManaRetirerCible) + "] mana a la cible ";
 	if (soinLanceur != 0)
 		res += "Vous soigne de " + Interface::m_intTOstring(soinLanceur) + "] ";
-
 	return res;
 }
 

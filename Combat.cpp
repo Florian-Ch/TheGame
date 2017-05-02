@@ -11,9 +11,9 @@ Combat::Combat(Joueur* h,string m): monstre(m)
 void Combat::m_ChoixCompHeros()							//Méthode qui permet au joueur de choisir une compétence a utiliser
 {
 	
-	Interface::m_afficherLigne("C'est a votre tour, quelle compétence voulez vous utiliser ?"); 	
-	
-	int n = Interface::m_getIntegeur(0, heros->m_GetNbrCompetence());								
+	Interface::m_afficherLigne("C'est a votre tour, quelle compétence voulez vous utiliser ?");
+cout<<"nb comp : "<<heros->m_GetNbrCompetence()<<endl;
+	int n=Interface::m_getIntegeur(0, heros->m_GetNbrCompetence());								
 	heros->m_UtiliserCompetence(n,&monstre);					
 }
 
@@ -29,16 +29,15 @@ void Combat::m_ChoixCompMonstre()						//Méthode qui définit l'IA du monstre �
 void Combat::m_Affichage()
 {
 	system("clear");
-	Interface::m_afficherLigne(heros->m_GetNom()+":");
-	Interface::m_afficherLigne("Pv:"+heros->m_GetPV());
-	Interface::m_afficherLigne("Mana:"+heros->m_GetMana());
-	vector<string> allComp= heros->m_GetAllCompetence();
-	for(int i=0; i< allComp.size();i++)
-		Interface::m_afficherLigne(allComp[i]);
-
-	Interface::m_afficherLigne(monstre.m_GetNom()+":");
-	Interface::m_afficherLigne("Pv:"+monstre.m_GetPV());
-	Interface::m_afficherLigne("Mana:"+monstre.m_GetMana());
+	Interface::m_afficherLigne(heros->m_GetNom());
+	Interface::m_afficherLigne("Pv : "+Interface::m_intTOstring(heros->m_GetPV()));
+	Interface::m_afficherLigne("Mana : "+Interface::m_intTOstring(heros->m_GetMana()));
+	vector<string>* allComp= heros->m_GetAllCompetence();
+//	for(int i=0; i< heros->m_GetNbrCompetence();i++)
+//		Interface::m_afficherLigne(allComp->at(i));
+	Interface::m_afficherLigne(monstre.m_GetNom());
+	Interface::m_afficherLigne("Pv : "+Interface::m_intTOstring(monstre.m_GetPV()));
+	Interface::m_afficherLigne("Mana : "+Interface::m_intTOstring(monstre.m_GetMana()));
 }
 
 void Combat::m_CombatLancement()
@@ -60,11 +59,10 @@ void Combat::m_CombatLancement()
 			if(heros->m_GetPV()!=0)
 				m_ChoixCompHeros();
 		}
-
-		if(heros->m_GetPV()==0 or monstre.m_GetPV()==0)
+		cout<<"PV heros : "<<heros->m_GetPV()<<endl;
+		cout<<"PV monstre : "<<monstre.m_GetPV()<<endl;
+		if(heros->m_GetPV()==0 || monstre.m_GetPV()==0)
 			fin_cbt=true;
-
-							
 	}
 }
 

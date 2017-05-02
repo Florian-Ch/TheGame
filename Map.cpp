@@ -6,6 +6,7 @@ using namespace std;
 Map::Map(){
 	tailleCarteX=0;
 	tailleCarteY=0;
+	memory='0';
 }
 
 Map::~Map(){
@@ -13,44 +14,62 @@ Map::~Map(){
 }
 
 void Map::m_deplacerHaut(){
-	if (carte[posX][posY-1]!=0 && posY!=0)
-		posY=posY-1;
+	if (carte[posX-1][posY]!='0' && posX!='0'){
+		carte[posX][posY]='4';
+		posX=posX-1;
+		memory=carte[posX][posY];
+		carte[posX][posY]='+';
+	}
 	else
-		Interface::m_messageErreur("BOUM ! Un mur !");
+		Interface::m_afficherLigne("BOUM ! Un mur !");
 }
 
 void Map::m_deplacerBas(){
-	if (carte[posX][posY+1]!=0 && posY!=tailleCarteY-1)
-		posY=posY+1;
+	if (carte[posX+1][posY]!='0' && posX!=tailleCarteX-1){
+		carte[posX][posY]='4';
+		posX=posX+1;
+		memory=carte[posX][posY];
+		carte[posX][posY]='+';
+	}
 	else
-		Interface::m_messageErreur("BOUM ! Un mur !");
+		Interface::m_afficherLigne("BOUM ! Un mur !");
 }
 
 void Map::m_deplacerGauche(){
-	if (carte[posX-1][posY]!=0 && posX!=0)
-		posX=posX-1;
+	if (carte[posX][posY-1]!='0' && posY!='0'){
+		carte[posX][posY]='4';
+		posY=posY-1;
+		memory=carte[posX][posY];
+		carte[posX][posY]='+';
+	}
 	else
-		Interface::m_messageErreur("BOUM ! Un mur !");
+		Interface::m_afficherLigne("BOUM ! Un mur !");
 }
 
 void Map::m_deplacerDroite(){
-	if (carte[posX+1][posY]!=0 && posX!=tailleCarteX-1)
-		posX=posX+1;
+	if (carte[posX][posY+1]!='0' && posY!=tailleCarteY-1){
+		carte[posX][posY]='4';
+		posY=posY+1;
+		memory=carte[posX][posY];
+		carte[posX][posY]='+';
+	}
 	else
-		Interface::m_messageErreur("BOUM ! Un mur !");
+		Interface::m_afficherLigne("BOUM ! Un mur !");
 }
 
 void Map::m_afficherCarte(){
 	if(tailleCarteX<15 && tailleCarteY<15){
-cout<<"ici1"<<endl;
 		for (int i=0; i<tailleCarteX; i++){
-			for (int j=0; j<tailleCarteY; j++)
-				Interface::m_afficherChar(carte[i][j]);
-//			Interface::m_afficherLigne("");
+			for (int j=0; j<tailleCarteY; j++){
+				if (!(carte[i][j] >= '0' && carte[i][j] <= '4') && carte[i][j]!='+')
+					Interface::m_afficherChar('4');
+				else
+					Interface::m_afficherChar(carte[i][j]);
+			}
+			Interface::m_afficherLigne("");
 		}
 	}
 	else if (posX-5<0){
-cout<<"ici2"<<endl;
 		for (int i=0; i<posX+6; i++){
 			for (int j=posY-5; j<posY+6; j++)
 				Interface::m_afficherChar(carte[i][j]);
@@ -58,7 +77,6 @@ cout<<"ici2"<<endl;
 		}
 	}
 	else if (posY-5<0){
-cout<<"ici3"<<endl;
 		for (int i=posX-5; i<posX+6; i++){
 			for (int j=0; j<posY+6; j++)
 				Interface::Interface::m_afficherChar(carte[i][j]);
@@ -66,7 +84,6 @@ cout<<"ici3"<<endl;
 		}
 	}
 	else if (posX+6>=tailleCarteX){
-cout<<"ici4"<<endl;
 		for (int i=posX-5; i<tailleCarteX; i++){
 			for (int j=posY-5; j<posY+6; j++)
 				Interface::m_afficherChar(carte[i][j]);
@@ -74,7 +91,6 @@ cout<<"ici4"<<endl;
 		}
 	}
 	else if (posY+6>=tailleCarteY){
-cout<<"ici5"<<endl;
 		for (int i=posX-5; i<posX+6; i++){
 			for (int j=posY-5; j<tailleCarteY; j++)
 				Interface::m_afficherChar(carte[i][j]);
@@ -82,7 +98,6 @@ cout<<"ici5"<<endl;
 		}
 	}
 	else {
-cout<<"ici6"<<endl;
 		for (int i=posX-5; i<posX+6; i++){
 			for (int j=posY-5; j<posY+6; j++)
 				Interface::m_afficherChar(carte[i][j]);
@@ -93,7 +108,6 @@ cout<<"ici6"<<endl;
 
 bool Map::m_chargerCarte(string nomMap){
 	string pathMap="Map/"+nomMap;
-cout<<pathMap<<endl;
 	ifstream mapTxt;
 	mapTxt.open(pathMap.c_str());
 //récupération de la taille de la map
@@ -122,25 +136,21 @@ cout<<pathMap<<endl;
 	if(mapTxt){
 		char lettre;
 		int i=0, j=0;
-cout<<"Map :"<<endl;
 		while(mapTxt.get(lettre)){
-			carte[i][j]=lettre;
-			cout<<carte[i][j];
-			if (j==tailleCarteY-1){
-				i++;
-				j=0;
-			cout<<endl;
+			if ((int)lettre>31){
+				carte[i][j]=lettre;
+				if (j==tailleCarteY-1){
+					i++;
+					j=0;
+				}
+				else
+					j++;
 			}
-			else
-				j++;
 		}
-cout<<"fin map"<<endl;
-cout<<"fdskjljfls :"<<carte[tailleCarteX-1][tailleCarteY-1]<<endl;
 		mapTxt.close();
 	}
 //Détection point de spawn
 	int nbSpawn=0;
-	cout<<"taille : "<<tailleCarteX<<" "<<tailleCarteY<<endl;
 	for (int i=0; i<tailleCarteX; i++){
 		for (int j=0; j<tailleCarteY; j++){
 			if (carte[i][j]=='1')
@@ -151,9 +161,11 @@ cout<<"fdskjljfls :"<<carte[tailleCarteX-1][tailleCarteY-1]<<endl;
 		Interface::m_afficherLigne("Chargement de la carte");
 		for (int i=0; i<tailleCarteX; i++){
 			for (int j=0; j<tailleCarteY; j++){
-				if (carte[i][j]=='1')
+				if (carte[i][j]=='1'){
 					posX=i;
 					posY=j;
+					carte[i][j]='+';
+				}
 			}
 		}
 		return true;
@@ -168,7 +180,7 @@ bool Map::m_resteMonstre(){
 	int nbMonstres=0;
 	for (int i=0; i<tailleCarteX; i++){
 		for (int j=0; j<tailleCarteY; j++){
-			if (carte[i][j]!='0' && carte[i][j]!='1' && carte[i][j]!='2' && carte[i][j]!='3' && carte[i][j]!='4')
+			if (carte[i][j]!='0' && carte[i][j]!='1' && carte[i][j]!='2' && carte[i][j]!='3' && carte[i][j]!='4' && carte[i][j]!='+')
 				nbMonstres++;
 		}
 	}
@@ -179,8 +191,15 @@ bool Map::m_resteMonstre(){
 }
 
 char Map::m_getCombat(){
-	if(!(carte[posX][posY] >= '0' && carte[posX][posY] <= '4'))
-		return carte[posX][posY];
+	if(!(memory >= '0' && memory <= '4') && memory!='+')
+		return memory;
 	else
 		return '0';
 }
+
+void Map::m_reset(){
+	for (int i=0; i<tailleCarteX; i++)
+		delete carte[i];
+	delete[] carte;
+}
+

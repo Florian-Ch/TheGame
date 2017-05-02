@@ -19,6 +19,7 @@
 class Map{
 private:
 	char** carte;			//!< Tableau de caractères de 2 dimensions représentant la map
+	char memory;			//!< Garde en mémoire le caractère d'avant
 	int posX;			//!< Position du joueur (abscisse)
 	int posY;			//!< Position du joueur (ordonnée)
 	int tailleCarteX;		//!< Taille de la carte (horizontale)
@@ -63,7 +64,12 @@ Affiche 5 cases de chaque coté du joueur si la taille de la carte et le positio
 \return false si tous les monstres ont été vaincus
 */
 	bool m_resteMonstre();
+/*!
+\brief Informe le jeu que le joueur est sur la même case qu'un monstre
+\return le nom du monstre rencontré
+*/
 	char m_getCombat();
+	void m_reset();
 
 /*!
 \brief Destructeur

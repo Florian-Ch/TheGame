@@ -42,17 +42,21 @@ void Jeux::m_getJoueur(){
 		fgets(heros_choisi, 50, stream_heros);
 	}
 	pclose(stream_heros);
-	string test = "";
+	string nomaff = "";
 	for(int i=0; i<50; i++)
 		if((int)heros_choisi[i] > 31)
-			test += heros_choisi[i];
-		else 
+			nomaff += heros_choisi[i];
+		else
 			break;
-	Interface::m_afficherLigne("Tu incarneras : "+ test);
+	string nomFichierJoueur ="Joueur/"+nomaff+".txt";
+	for (int i=0; i<nomaff.size(); i++){
+		if (nomaff[i]=='_')
+			nomaff[i]=' ';
+	
+	}
+	Interface::m_afficherLigne("Tu incarneras : "+ nomaff);
 //Initialisation du joueur
-	string test2 ="Joueur/"+test+".txt";
-	heros= new Joueur(test2);
-	Interface::m_afficherLigne(test2);
+	heros= new Joueur(nomFichierJoueur);
 }
 
 void Jeux::m_selectDifficulty(){
@@ -81,8 +85,6 @@ void Jeux::m_getMap(){
 	system("rm ./Map/All_map.txt");
 //Sélectionne une map au hasard dans la difficulté
 	int num_map=rand()%(nb_map);
-cout<<"nb map: "<<nb_map<<endl;
-cout<<"num map: "<<num_map<<endl;
 //Donne le nom de la map randomisée avec laquelle le joueur va jouer
 	string d;
 	if (difficulty==1) d='E';
@@ -101,19 +103,24 @@ cout<<"num map: "<<num_map<<endl;
 
 void Jeux::m_update(){
 	if(etatJeux==e_Initialisation){
+		system("clear");
+		system("mpg123 Gladiator.mp3 2> /dev/null &");
 		Interface::m_afficherLigne("________     ________     ___________________________");
 		Interface::m_afficherLigne("   |   |_____||______    |  ____|_____||  |  ||______");
 		Interface::m_afficherLigne("   |   |     ||______    |_____||     ||  |  ||______");
 		Interface::m_afficherLigne("_____________________________________________________");
 		Interface::m_afficherLigne("");
+		Interface::m_afficherLigne("Appuyer sur ENTREE pour continuer");
+		getchar();
+		system("clear");
 		m_getJoueur();
 		m_selectDifficulty();
 		m_getMap();
-		carte.m_afficherCarte();
 		etatJeux=e_Exploration;
 	}
 
 	else if(etatJeux==e_Exploration){
+		carte.m_afficherCarte();
 		char direction[4];
 		direction[0]='z';	//Avancer
 		direction[1]='q';	//Gauche
@@ -128,7 +135,6 @@ void Jeux::m_update(){
 			carte.m_deplacerBas();
 		if (mouvement=='d')
 			carte.m_deplacerDroite();
-		carte.m_afficherCarte();
 		if (carte.m_getCombat()!='0'){
 			etatJeux=e_Combat;
 		}
@@ -153,6 +159,7 @@ void Jeux::m_update(){
 		else
 			Interface::m_afficherLigne("Partie finie");
 //rejouer ou non
+		carte.m_reset();
 		Interface::m_afficherLigne("Voulez-vous rejouer ? (0 pour oui, 1 pour non) : ");
 		int choix=Interface::m_getIntegeur(0,1);	
 		if (choix==0){

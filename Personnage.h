@@ -32,4 +32,3 @@ public:
 	int m_GetNbrCompetence();
 	std::string m_GetNom();
 };
-
