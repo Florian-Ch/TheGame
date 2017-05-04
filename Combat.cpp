@@ -20,9 +20,26 @@ void Combat::m_ChoixCompHeros()							//Méthode qui permet au joueur de choisir
 void Combat::m_ChoixCompMonstre()						//Méthode qui définit l'IA du monstre à améliorer
 {
 
-	int nbc=monstre.m_GetNbrCompetence();					//Recup le nbr de comp du monstre
-	int m=rand()%nbc;							//Genre un nombre aléatoire pour savoir qu'elle comp utiliser
-	monstre.m_UtiliserCompetence(m,heros);
+	int memo_comp;
+	int pv_max_perdu;
+	pv_max_perdu=heros->m_GetPVMax();
+	
+	Joueur* copie_heros;
+	copie_heros=heros;
+
+	for(int i=0;i<m_GetNbrCompetece();i++)
+	{
+		monstre._UtiliserCompetence(i,copie_heros);
+		if(copie_heros->m_GetPV() <= pv_max_perdu)
+		{
+			pv_max_perdu=copie_heros->m_GetPV();
+			memo_comp=i;
+			copie_heros->m_RestaurerSante();
+			
+		}
+	}
+
+	monstre.m_UtiliserCompetence(memo_comp,heros);
 }
 
 void Combat::m_Affichage()
