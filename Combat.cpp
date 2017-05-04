@@ -27,9 +27,9 @@ void Combat::m_ChoixCompMonstre()						//Méthode qui définit l'IA du monstre �
 	Joueur* copie_heros;
 	copie_heros=heros;
 
-	for(int i=0;i<m_GetNbrCompetece();i++)
+	for(int i=0;i<monstre.m_GetNbrCompetence();i++)
 	{
-		monstre._UtiliserCompetence(i,copie_heros);
+		monstre.m_UtiliserCompetence(i,copie_heros);
 		if(copie_heros->m_GetPV() <= pv_max_perdu)
 		{
 			pv_max_perdu=copie_heros->m_GetPV();
