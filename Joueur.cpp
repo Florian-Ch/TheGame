@@ -7,6 +7,11 @@ Joueur::Joueur(string nomHeros) : Personnage(nomHeros)
 
 }
 
+Joueur::Joueur(string nomHeros, int pvAc,int manaAc) : Personnage(nomHeros)
+{
+	pvActuelle = pvAc;
+	manaActuelle = manaAc;
+}
 
 Joueur::~Joueur()
 {
@@ -15,7 +20,7 @@ Joueur::~Joueur()
 
 void Joueur::m_UtiliserCompetence(int numeroCompetence, Personnage* cible)
 {
-	if (manaActuelle > competences[numeroCompetence].m_getCoutMana())
+	if (manaActuelle >= competences[numeroCompetence].m_getCoutMana())
 	{
 		manaActuelle -= competences[numeroCompetence].m_getCoutMana();
 		m_Utiliser(&competences[numeroCompetence], cible);

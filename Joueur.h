@@ -8,7 +8,6 @@
 
 #pragma once
 #include "Personnage.h"
-
 /*! \class Joueur Joueur.h
     \brief classe Joueur
     Gère la création d'un personnage jouable ainsi que la gestion d'événement pouvant lui arriver
@@ -22,6 +21,14 @@ public:
 \param string Le nom du fichier qui va être lu pour charger le joueur 
 */
 	Joueur(std::string);
+/*!
+\brief Constructeur
+	Initialise le joueur
+\param string Le nom du fichier qui va être lu pour charger le joueur 
+\param int Les PV du joueur
+\param int Le Mana du joueur
+*/
+	Joueur(std::string, int,int);
 /*!
 \brief Destructeur
 	Automatiquement appelée a la destruction du joueur
@@ -55,4 +62,3 @@ public:
 	int m_GetPVMax();
 
 };
-

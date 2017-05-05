@@ -1,0 +1,6 @@
+Archer Sombre
+50
+10
+60
+Tire_Simple
+HeadShot

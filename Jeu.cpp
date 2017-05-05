@@ -24,14 +24,15 @@ void Jeux::m_getJoueur(){
 //Choix du personnage
 	string s_choix;
 	int choix=0;
-	while(choix<1 || choix>nb_heros){
+//	while(choix<1 || choix>nb_heros){
 		Interface::m_afficherLigne("Quelle classe veux-tu pour ton personnage ?");
-		getline(cin, s_choix);
-		choix= Interface::m_stringTOint(s_choix);
-		if (choix<1 || choix>nb_heros){
-			Interface::m_afficherLigne("Impossible, merci de choisir un nombre entre 1 et "+Interface::m_intTOstring(nb_heros));
-		}
-	}
+		choix=Interface::m_getIntegeur(1,nb_heros);
+		s_choix=Interface::m_intTOstring(choix);
+//		choix= Interface::m_stringTOint(s_choix);
+//		if (choix<1 || choix>nb_heros){
+//			Interface::m_afficherLigne("Impossible, merci de choisir un nombre entre 1 et "+Interface::m_intTOstring(nb_heros));
+//		}
+//	}
 //Récupération du nom du personnage choisi
 	string cmd("cd Joueur; c=1; for i in *; do if test $c -eq ");
 	cmd+=s_choix;
@@ -92,9 +93,8 @@ void Jeux::m_getMap(){
 	else if (difficulty==3) d='H';
 	string s_num_map=Interface::m_intTOstring(num_map);
 	string nom_map="map"+d+s_num_map+".txt";
-//	carte.m_chargerCarte(nom_map);
 //si la map n'est pas correcte
-	if (carte.m_chargerCarte(nom_map)==false){
+	if (carte.m_chargerCarte("Map/"+nom_map)==false){
 		Interface::m_afficherLigne("Carte corrompue");
 		etatJeux=e_FinDuJeu;
 	}
@@ -102,10 +102,12 @@ void Jeux::m_getMap(){
 }
 
 void Jeux::m_update(){
+	char monstre;
 	if(etatJeux==e_Initialisation){
+		system("chmod 700 delete~.sh");
 		system("./delete~.sh");
 		system("clear");
-		system("mpg123 Gladiator.mp3 2> /dev/null &");
+//		system("mpg123 Gladiator.mp3 2> /dev/null &");
 		Interface::m_afficherLigne("________     ________     ___________________________");
 		Interface::m_afficherLigne("   |   |_____||______    |  ____|_____||  |  ||______");
 		Interface::m_afficherLigne("   |   |     ||______    |_____||     ||  |  ||______");
@@ -114,38 +116,112 @@ void Jeux::m_update(){
 		Interface::m_afficherLigne("Appuyer sur ENTREE pour continuer");
 		getchar();
 		system("clear");
-		m_getJoueur();
-		m_selectDifficulty();
-		m_getMap();
-		etatJeux=e_Exploration;
+		ifstream saveJ("save/saveJoueur.txt", ios::in);
+		int continuer=2;
+		if(saveJ){
+			Interface::m_afficherLigne("[1]Continuer la partie en cours");
+			Interface::m_afficherLigne("[2]Nouvelle partie");
+			continuer=Interface::m_getIntegeur(1, 2);
+			if (continuer==1){
+				string nomh;
+				string res;
+				getline(saveJ, nomh);
+				getline(saveJ, res);
+				int PV=Interface::m_stringTOint(res.c_str());
+				getline(saveJ, res);
+				int Mana=Interface::m_stringTOint(res.c_str());
+				heros=new Joueur("Joueur/"+nomh+".txt", PV, Mana);
+				saveJ.close();
+				carte.m_chargerCarte("save/saveMap.txt");
+			}
+		}
+		if (continuer==2){
+			m_getJoueur();
+			m_selectDifficulty();
+			m_getMap();
+		}
+			system("clear");
+			Interface::m_afficherLigne("Utiliser z pour aller vers le haut, q vers la gauche, s vers le bas et d vers la droite");
+			Interface::m_afficherLigne("Appuyer sur m pour afficher la map entière");
+			Interface::m_afficherLigne("Appuyer sur p pour sauvegarder");
+			Interface::m_afficherLigne("Appuyer sur ! pour quitter");
+			etatJeux=e_Exploration;
 	}
 
 	else if(etatJeux==e_Exploration){
-		system("clear");
 		carte.m_afficherCarte();
-		char direction[4];
-		direction[0]='z';	//Avancer
-		direction[1]='q';	//Gauche
-		direction[2]='s';	//Reculer
-		direction[3]='d'; 	//Droite
-		char mouvement=Interface::m_getChar(&direction[0], 4);
-		if (mouvement=='z')
+		char getcmd[7];
+		getcmd[0]='z';	//Avancer
+		getcmd[1]='q';	//Gauche
+		getcmd[2]='s';	//Reculer
+		getcmd[3]='d'; 	//Droite
+		getcmd[4]='m';	//Afficher la map
+		getcmd[5]='p';	//Sauvegarder
+		getcmd[6]='!';	//Quitter
+		char cmd=Interface::m_getChar(&getcmd[0], 7);
+		if (cmd=='z')
 			carte.m_deplacerHaut();
-		if (mouvement=='q')
+		if (cmd=='q')
 			carte.m_deplacerGauche();
-		if (mouvement=='s')
+		if (cmd=='s')
 			carte.m_deplacerBas();
-		if (mouvement=='d')
+		if (cmd=='d')
 			carte.m_deplacerDroite();
-		if (carte.m_getCombat()!='0')
+		if (cmd=='m'){
+			carte.m_displayMap();
+			Interface::m_afficherLigne("Appuyer sur une lettre puis sur ENTREE pour continuer");
+			Interface::m_attChar();
+		}
+		if (cmd=='p'){
+			carte.m_save();
+			system("> save/saveJoueur.txt");
+			ofstream save("save/saveJoueur.txt", ios::out | ios::trunc);
+			if (save){
+				save<<heros->m_GetNom()<<endl;
+				save<<heros->m_GetPV()<<endl;
+				save<<heros->m_GetMana();
+			}
+			Interface::m_afficherLigne("Sauvergarde bien effectuée");
+		}
+		if (cmd=='!')
+			etatJeux=e_FinDuJeu;
+		if (carte.m_regenPV()==true){
+			heros->m_RestaurerSante();
+			Interface::m_afficherLigne("PV au max !");
+		}
+		if (carte.m_regenMana()==true){
+			heros->m_RestaurerMana();
+			Interface::m_afficherLigne("Mana au max !");
+		}
+		monstre=carte.m_getCombat();
+		if (monstre!='0')
 			etatJeux=e_Combat;
 	}
 
 	else if(etatJeux==e_Combat){
-		
-		string nomAdversaire = string(1,carte.m_getCombat());
-		Combat fight(heros,nomAdversaire);
-		fight.m_CombatLancement();
+		string s="Monstre/"+string(1,monstre)+".txt";
+		ifstream fichier(s.c_str(), ios::in);
+		string s_nom;
+		if(fichier){
+			string ligne;
+			getline(fichier, ligne);
+			if (ligne[0]=='*'){
+				for (int i=0; i<ligne.size()-1; i++)
+					s_nom+=ligne[i+1];
+			}
+			else
+				s_nom=string(1,monstre);
+			fichier.close();
+		}
+		else
+			Interface::m_afficherLigne("Fichier non ouvert");
+		Combat fight(heros,s_nom);
+		bool fuite=fight.m_CombatLancement();
+		system("clear");
+		if (!fuite)
+			carte.m_fuite();
+		else
+			carte.m_mortMonstre();
 		if(heros->m_GetPV()==0 || carte.m_resteMonstre()==false)
 			etatJeux=e_FinDuJeu;
 		else
@@ -169,6 +245,7 @@ void Jeux::m_update(){
 			end=true;
 		}
 		if (choix==1){
+			system("clear");
 			end=true;
 		}
 	}

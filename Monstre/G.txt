@@ -1,0 +1,6 @@
+Guerrier Sombre
+100
+0
+10
+Attaque_Simple
+Barrage

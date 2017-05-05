@@ -21,6 +21,7 @@
 #include <cstdlib>
 #include <string>
 #include "Interface.h"
+#include <vector>
 
 
 class Combat
@@ -28,9 +29,9 @@ class Combat
 
 	private:
 	
-	Joueur* heros;		/*!< Héros du joueur*/
-	Monstre monstre;	/*!< Monstre à combattre*/ 	
-	bool fin_cbt;		/*!< Etat du combat*/ 	
+	Joueur* heros;				/*!< Héros du joueur*/
+	std::vector<Monstre> tab_monstre;	/*!< Monstre à combattre*/ 	
+	bool fin_cbt;				/*!< Etat du combat*/ 	
 
 	public:
 	
@@ -42,9 +43,9 @@ class Combat
 	
 	/*!
 	\fn public m_CombatLancement()
-	\brief Fonction qui gere le deroulement du combat
+	\brief Fonction qui gere le deroulement du combat retourne true si le combat se finit par KO false si le héros fuit
 	*/
-	void m_CombatLancement();
+	bool m_CombatLancement();
 	
 	/*!
 	\fn public m_Affichage()

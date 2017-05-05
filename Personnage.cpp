@@ -34,7 +34,7 @@ Personnage::Personnage(string emplacementFichier)
 		pvActuelle = pvMax;
 	}
 	else
-		Interface::m_messageErreur("Erreur ouverture du fichier :" + emplacementFichier);
+		Interface::m_afficherLigne("Erreur ouverture du fichier :" + emplacementFichier);
 
 }
 

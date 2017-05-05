@@ -1,6 +1,7 @@
 #pragma once
 #include <fstream>
 #include <string>
+#include <cstdlib>
 #include "Interface.h"
 /*!
 \file Jeu.h
@@ -22,6 +23,8 @@ private:
 	char memory;			//!< Garde en mémoire le caractère d'avant
 	int posX;			//!< Position du joueur (abscisse)
 	int posY;			//!< Position du joueur (ordonnée)
+	int origineX;			//!< Abscisse du point de spawn
+	int origineY;			//!< Ordonnée du point de spawn
 	int tailleCarteX;		//!< Taille de la carte (horizontale)
 	int tailleCarteY;		//!< Taille de la carte (verticale) 
 public:
@@ -52,6 +55,11 @@ Affiche 5 cases de chaque coté du joueur si la taille de la carte et le positio
 */
 	void m_afficherCarte();
 /*!
+\brief Affiche la carte
+Affiche la totalité de la map
+*/
+	void m_displayMap();
+/*!
 \brief Charge la carte
 \param string nom du fichier map à charger
 \return true si la map est possible
@@ -69,8 +77,30 @@ Affiche 5 cases de chaque coté du joueur si la taille de la carte et le positio
 \return le nom du monstre rencontré
 */
 	char m_getCombat();
+/*
+\brief remplace le monstre par un chemin
+*/
+	void m_mortMonstre();
+/*
+\brief détruit la carte de la partie en cours pour pouvoir recommencer
+*/
 	void m_reset();
-
+/*
+\brief si le héros est sur un point de régen de vie
+*/
+	bool m_regenPV();
+/*
+\brief si le héros est sur un point de régen de mana
+*/
+	bool m_regenMana();
+/*
+\brief gère la fuite d'un combat
+*/
+	void m_fuite();
+/*
+\brief sauvegarde
+*/
+	void m_save();
 /*!
 \brief Destructeur
 */

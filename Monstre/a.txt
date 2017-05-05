@@ -1,5 +1,6 @@
 Mannequin d'entrainement
-20
-0
-0
+100
+100
+10000
 Attaque_Inutile
+DOOM

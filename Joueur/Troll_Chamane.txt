@@ -1,5 +1,7 @@
 Troll Chamane
 100
-40
+100
 20
 Coup_de_baton
+Pluie_de_meteorites
+Soin_funeste

@@ -83,3 +83,8 @@ string Interface::m_intTOstring(int leChiffre)
 	ss << leChiffre;
 	return ss.str();
 }
+
+void Interface::m_attChar(){
+	char a;
+	cin>>a;
+}

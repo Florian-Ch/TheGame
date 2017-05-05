@@ -16,5 +16,6 @@ public:
 	static std::string m_getString();
 	static int m_stringTOint(std::string);
 	static std::string m_intTOstring(int);
+	static void m_attChar();
 };
 
